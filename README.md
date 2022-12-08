@@ -1333,9 +1333,8 @@ Server: hash(./Bilder/cat.jpeg) => 123323525deaf24213
 ### Funktionsweise
 Um Regex auszuführen, werden NFAs (Nichtdeterministische Finite Automaten) konstruiert. Durch Eigenkanten werden die NFAs immer komplexer, so kommt es zu einer exponentiell steigenden Ausführungszeit.
 
-```js
-const searchRe = /Ashton/i
-```
+![Produktionsregeln um einen NFA aus einer Regex zu erzeugen](regex_nfa_produktionsregeln.png)
+![Ein NFA für einen komplexen Ausdruck](komplexer_nfa.png)
 
 ```
 ([a-zA-Z]+)* [a-zA-Z]*
@@ -1344,13 +1343,6 @@ const searchRe = /Ashton/i
 ### Vermeidung
 - Input bereinigen
 - Ausführungszeit beschränken
-
-
-
-
-
-
-
 
 ## Cross Site Scripting (XSS)
 - Man injiziert einen (Script-) Tag?
@@ -1371,6 +1363,8 @@ Wir bekommen per XSS Zugriff auf den Client (Browser). Das System bzw. dessen Da
 Imitieren eines Nutzers durch Ausnutzen einer bestehenden Session, aus einem Browser heraus.
 
 Man bringt den Browser dazu eine Anfrage an den Server zu stellen, der Browser sendet dabei das bestehende Cookie mit. Wie bringt man den Browser dazu?
+
+![Authorisierungsablauf per Cookie](auth_schema_csrf.png)
 
 Durch ein manipuliertes Bild
 
@@ -1474,40 +1468,270 @@ http://myybank.com
 
 - CORS restriktiv konfigurieren
 
+# DSGVO
+
+## Grundsätze
+- Rechtmäßigkeit
+- Zweckbindung
+- Datenminimierung
+- Richtigkeit
+- Speicherbegrenzung
+- Integrität und Vertraulichkeit
+- Rechenschaftspflicht
+
+## Geltungsbereich
+- Gilt für alle Personen, die sich innerhalb der Union _befinden_
+- Unabhängig vom Sitz der verarbeitenden Stelle
+- Unabhängig von der Staatsbürgerschaft
+- Unabhängig davon, ob eine Diesntleistung in Anspruch genommen wird
+
+- Gilt für Speicherung und Verarbeitung von Daten
+- Die Verarbeitung kann, aber muss nicht automatisiert erfolgen
+
+- Persönliche und familiäre Zwecke sind ausgenommen
+
+## Was sind Personenbezogene Daten
+- Die Daten müssen sich auf eine Person beziehen
+- Die Person muss identifiziert oder identifizierbar sein
+
+- Identifizierende Merkmale
+  - Namen, Anschrift, usw.
+  - Kennummern (Steuer ID, IBAN)
+  - Standortdaten
+  - Online-Kennungen (Twitter Handle, Facebook Account, usw.)
+  - IP-Adressen
+
+Wichtig: Alle Daten, die sich auf eine identifizierbare Person beziehen, sind personenbezogen, nicht nur die Merkmale, durch die die Person identifizierbar wird.
+
+## Rechtmäßigkeit
+Eines muss gegeben sein:
+- Es gibt eine Einwilligung unter Angabe des Zwecks
+- Die Daten sind erforderlich für eine Vertragserfüllung (auf Anfrage des Betroffenen)
+- Die Datenverarbeitung ist notwendig aufgrund rechtlicher Auflagen
+- Datenverarbeitung ist lebensnotwendig
+- Es besteht "berechtigtes Interesse"
+
+## Zweckbindung
+- Erhebung erfolgt immer für einen Zweck
+- Die Verarbeitung darf nur diesem Zweck dienen
+
+- Zweckänderung
+  - Erneute Einwilligung (unter Angabe des veränderten Zwecks)
+  - Folgenabschätzung durchführen und dokumentieren
+  - Ggf. Pseudonymisierung oder Verschlüsselung
+
+## Einwilligung
+- Nachweispflicht
+- Eindeutig formuliert
+- Freiwilligkeit: Die Einwilligung darf nicht Voraussetzung einer Vertragserfüllung oder Leistungserbringung sein, für die die Erhebung nicht erforderlich ist.
+
+- Einwilligung erst ab 16
+- Es muss eine Altersprüfung vorgenommen werden
+
+## Besonders geschützte Daten
+Dier Verarbeitung folgender Daten ist grundsätzlich untersagt:
+- Ethnische Herkunft
+- Politische Meinung
+- Religiöse Zugehörigkeit
+- Genetische Merkmale
+- Biometrische Merkmale
+- Gesundheitsdaten
+- Daten zum Sexualleben
+- Gewerkschaftszugehörigkeit
+
+Ausnahmen:
+- explizite Einwilligung (kann durch Landesrecht untersagt werden)
+- Die Erhebung ist rechtlich vorgeschrieben
+- Die Verarbeitung ist lebensnotwendig, und die Person ist nicht in der Lage einzuwilligen
+- Die Daten wurden bereits von der betroffenen Person veröffentlicht
+- Verteidigung von Rechtsansprüchen
+- Die Verarbeitung wird bei berechtigtem öffentlichen Interesse per Verordnung verlangt
+
+## Betroffenenrechte
+### Informationspflicht
+Erhebt man Daten, muss man aufklären über:
+- Zweck der Verarbeitung
+- (wenn möglich) Dauer der Speicherung
+- Welche Daten erhoben werden
+- Rechtsgrundlage
+  - bei berechtigtem Interesse: Angabe des Grundes
+- ihre Betroffenenrechte
+- das Beschwerderecht
+- Nennung der Auftragsverarbeiter
+
+Bei Erhebung bei einer anderen als der betroffenen Person: https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32016R0679&from=EN#d1e2370-1-1
+
+### Auskunftsrecht
+Jede Person kann jederzeit Auskunft darüber anfordern, ob personenbezogene (die sich auf die betroffene Person beziehen) Daten verarbeitet werden.
+
+Werden Daten verarbeitet, dann muss Auskunft gegeben werden über:
+- Zweck der Verarbeitung
+- (wenn möglich) Dauer der Speicherung
+- Welche Daten erhoben werden
+- Rechtsgrundlage
+  - bei berechtigtem Interesse: Angabe des Grundes
+- ihre Betroffenenrechte
+- das Beschwerderecht
+- eine Kopie der Daten selbst
+- Nennung der Auftragsverarbeiter
 
 
+### Recht auf Berichtigung
+Selbsterklärend.
 
+### Recht auf Löschung
+Betroffene Personen können die Löschung ihrer Daten fordern, falls:
+- Die Daten für den Verarbeitungszweck nicht mehr erforderlich sind
+- Die Einwilligung wird widerrufen und es gibt keine andere Rechtsgrundlage
+- Es gibt keine Rechtsgrundlage zur Verarbeitung
 
+Wurden die Daten an Dritte weitergegeben, muss ich diese über die Löschanfrage informieren.
 
+### Recht auf Einschränkung der Verarbeitung
+Während eine Löschanfrage geprüft wird, kann die betroffene Person fordern, dass die Daten bis zu einer Entscheidung nicht weiter verarbeitet werden.
 
+## Pflichten der verantwortlichen Stelle
+### Technische Maßnahmen
+Die Vertraulichkeit und Integrität muss durch technische Maßnahmen sichergestellt werden.
 
+Zertifizierungsverfahren können genutzt werden, sind aber nicht verpflichtend.
 
+### Datenminimierung
+Grundsätzlich sollen nur notwendige Daten erhoben werden.
 
+Das Erheben weiterer Daten soll als opt-in Modell gestaltet werden.
 
+### Auftragsverarbeitung
+- Vor der Verarbeitung müssen vertragliche Absprachen getroffen werden, die die Einhaltung der DSGVO garantieren sollen
+- Über Auftragsverarbeiter muss ein Register geführt werden
+  - Zweck der Verarbeitung
+  - Kategorien der verarbeiteten Darten
+  - Löschfristen
+  - Beschreibung der Maßnahmen, die zum Einhalt der DSGVo getroffen werden
+- Die Verarbeitung erfolgt nur auf explizite schriftliche Weisung
+- Der Auftragsverarbeiter muss sich für die Verwendung weiterer Verarbeiter eine Genehmigung einholen
+- Nach Abschluss der Verarbeitung müssen die Daten beim Auftragsverarbeiter gelöscht werden
 
+### Meldepflicht
+Wird die Integrität oder Vertraulichkeit der Daten verletzt, muss dies unverzüglich (innerhalb von 72 Stunden) gegenüber der zuständigen Datenschutzbehörde gemeldet werden.
 
+Die betroffenen Personen müssen unterrichtet werden.
 
+### Folgenabschätzung
+Durch die zuständige Datenschutzbehörde wird eine Liste an Verarbeitungsvorgängen veröffentlicht, die zwingend einer Folgenabschätzung bedürfen
 
+https://www.datenschutz-bayern.de/datenschutzreform2018/DSFA_Blacklist.pdf
 
+Eine Folgenabschätzung ist auch zu erstellen, wenn ein besonderes Risiko zu erwarten ist.
 
+Besonderes Risiko kann bestehen bei:
+- Prozessen, die Rechtswirkung auf Betroffene haben
+- Besonders geschützte Daten
+- Systematische Überwachung öffentlicher Bereiche
 
+## Technische Umsetzung: Datenschutz by Design
+### Grundprinzipien
+- Sorgfaltspflicht
+  - Erst planen, dann machen
+- Datensparsamkeit
+  - Nur erheben was man braucht
+  - Nur so lange speichern wie nötig
+  - Kontinuierliche Evaluierung des Verarbeitungszwecks
+- Transparenz
+  - Klar definierte Ziele
+  - Klar definierte Abläufe
+  - Klar definierte Verantwortliche
+- Abgrenzung von Verantwortungsbereichen
+  - Daten aufteilen und nur benötigte Teile übermitteln
+- Bewusstsein für Möglichkeiten der Datenanalyse
+  - Wann sind Daten identifizierend?
+  - Was könnte man aus den Daten noch auslesen?
+  - Welcher Schaden könnte entstehen, wenn die Daten veröffentlicht werden?
+- Bewusstsein für IT-Sicherheit
+  - Welche Maßnahmen werden momentan ergriffen?
+  - Schweizer-Käse-Modell
+  - Wie kann unerlaubter Zugriff festgestellt werden?
+  - Regelmäßige Überprüfung der Maßnahmen (am besten durch externe Stellen)
+  - Prozesse für den Notfall definieren und einüben
 
+### Anforderungen
+- Erkennbarkeit von personenbezogenen Daten
+- Zuordnung von Datensätzen zu
+  - betroffenen Person
+  - Verarbeitungszweck
+  - Rechtsgrundlage
+- Möglichkeit zum Datenxport
+- Möglichkeit zur Löschung
+- Nachvollziehbarkeit von Zugriffen
+- Möglichkeit mit pseudonymisierten oder unvollständigen Daten zu arbeiten 
 
+## Anonymisierung
+Den Personenbezug aus den Daten entfernen
+- Aus einer Tabelle die entsprechende Spalte entfernen
+- Daten durch zufällige Daten ersetzen
+- Sollte man eine konsistente Verfremdung durchführen? (Der selben Person immer die selbe Kennung zuweisen)
+  - Beugt einer statistischen Verfälschung
+  - Unter Umständen wird allerdings aus der Anonymisierung nur eine Pseudonymisierung
 
+Technische Umsetzung:
+- Hashing
+- Zufallsgeneratoren
+- Downsampling
 
+## Pseudonymisierung
+Ersetzen von identifizierenden Merkmalen durch Pseudonyme, die originalen Daten können per Zurordnungstabelle wieder aufgelöst werden.
+- Zuordnung und Daten werden getrennt gespeichert
+- Umkehrbar
 
+## Verschlüsselung
+Identifizierende Daten werden per Verschlüsselung unkenntlich gemacht.
+- Wiederherstellen der Daten ist nur mit dem Schlüssel möglich.
+- Wird die Verschlüsselung geknackt, ist die Maßnahme wirkungslos
+- Schlüssel bildet Single Point of Failure
 
+## Eventsourcing
+Grundannahme:
+- Events werden auf unbestimmte Zeit gespeichert
+- Events sind nach dem Speichern nicht mehr veränderbar
+- Aufbau des Ist-Zustands durch Replay der Vergangenheit
 
+Probleme:
+- Speicherfristen
+- Recht auf Löschung
 
+### Ansatz: Daten verschlüsselt in den Event Store schreiben
+Wie funktioniert dann das Replay, ohne dass man die Daten entschlüsselt?
 
+Wie geht man mit alten Daten um, die man neu verschlüsseln müsste?
 
+Ist das Löschen eines Schlüssel gleichwertig zu einer Löschung der Daten?
 
+Wie unterscheidet man zwischen verlorenem und gelöschtem Schlüssel?
+
+### "Compacting" / Snapshots
+Den aktuellen Zustand des Systems replayen, in ein neues Event verpacken, die alten Events löschen und auf Basis des neuen Events fortfahren.
+
+Daten löschen:
+1. Ein "Tombstone"-Event in den Store schreiben, was die Daten ausnullt
+2. Einen Snapshot auslösen
+
+### Personenbezogene Daten durch Referenzen ersetzen
+In den Events werden nicht die Daten direkt, sondern Verweise auf die Daten gespeichert.
+Die Daten selbst liegen in einem anderen System, was die Zugriffskontrolle separat implementiert.
+
+## Automatisierte Dependency Updates
+- Per Renovatebot / Dependabot
+- Der Bot erkennt package.json, pom.xml, usw.
+- Der Bot stellt Pull Requests, in denen er package.json, pom.xml usw. aktualisiert
+- Durch das Erstellen der PRs wird die Pipeline gestartet
+- Die Pipeline kompiliert, analysiert und testet den Code mit den aktualisierten Dependency-Versionen
+- Der PR kann nur gemerged werden, wenn die Pipeline erfolgreich ausführt
+- In den meisten Fällen muss dann nur noch auf "merge" geklickt werden
+- Voraussetzungen:
+  - Gute Testabdeckung
+  - Automatisierte Qualitätskontrolle per CI-Pipeline
+  - (Semantic Versioning)
 
 ## Links
-
 - [Crypto 101](https://www.crypto101.io/)
 
-## Fragen für die weiteren Tage
-
-- Digitale Souveränität / Self Custody
-- Wie geht man mit kompromittierten Schlüsseln um?
